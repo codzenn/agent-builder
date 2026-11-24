@@ -4,9 +4,10 @@ import Link from "next/link";
 type LogoProps = {
   href: string;
   showLabel?: boolean;
+  compact?: boolean;
 };
 
-export function Logo({ href, showLabel = true }: LogoProps) {
+export function Logo({ href, showLabel = true, compact = false }: LogoProps) {
   return (
     <Link
       href={href}
@@ -20,7 +21,9 @@ export function Logo({ href, showLabel = true }: LogoProps) {
         height={40}
         className="size-10"
       />
-      {showLabel && <span className="text-base">Agent Builder</span>}
+      {showLabel && (
+        <span className={`text-base ${compact ? "hidden sm:inline" : ""}`}>Agent Builder</span>
+      )}
     </Link>
   );
 }

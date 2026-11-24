@@ -93,35 +93,47 @@ export function AgentBuilder({ agent }: AgentBuilderProps) {
   }
 
   return (
-    <div className="flex h-full min-h-screen flex-col">
-      <header className="flex items-center justify-between gap-4 border-b border-border px-4 py-3">
+    <div className="flex h-full min-h-screen flex-col bg-background">
+      <header className="sticky top-0 z-10 flex flex-col gap-3 border-b border-border bg-background/95 px-4 py-3 backdrop-blur sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <div className="flex min-w-0 items-center gap-3">
-          <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-muted text-2xl">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-2xl text-primary">
             {agent.icon}
           </span>
           <div className="min-w-0">
-            <h1 className="truncate font-heading text-lg font-semibold">{name || "Untitled Agent"}</h1>
-            <p className="text-muted-foreground text-xs">
-              Visual builder {hasUnsavedChanges ? "· unsaved changes" : "· saved"}
+            <h1 className="truncate font-heading text-base font-semibold tracking-tight sm:text-lg">
+              {name || "Untitled Agent"}
+            </h1>
+            <p
+              aria-live="polite"
+              className={`mt-0.5 text-xs ${hasUnsavedChanges ? "text-primary" : "text-muted-foreground"}`}
+            >
+              {hasUnsavedChanges ? "Unsaved changes" : "All changes saved"}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => setToolsOpen(true)}>
+        <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+          <Button variant="outline" size="sm" className="rounded-full" onClick={() => setToolsOpen(true)}>
             Tools
           </Button>
-          <Button variant="outline" size="sm" onClick={() => setSettingsOpen(true)}>
+          <Button variant="outline" size="sm" className="rounded-full" onClick={() => setSettingsOpen(true)}>
             Settings
           </Button>
-          <Button variant="outline" size="sm" onClick={() => setChatOpen(true)}>
+          <Button variant="outline" size="sm" className="rounded-full" onClick={() => setChatOpen(true)}>
             Test Chat
           </Button>
-          <Button onClick={handleSave} disabled={saveAgent.isPending || !hasUnsavedChanges}>
+          <Button
+            size="sm"
+            className="rounded-full px-4"
+            onClick={handleSave}
+            disabled={saveAgent.isPending || !hasUnsavedChanges}
+          >
             {saveAgent.isPending ? "Saving..." : "Save"}
           </Button>
           <Button
             variant="outline"
+            size="sm"
+            className="rounded-full"
             nativeButton={false}
             render={
               <Link

@@ -8,29 +8,41 @@ import { useCanvasStore } from "@/modules/builder/store/canvas-store";
 
 type ToolEntry = { toolId: string; config?: unknown };
 
-export function AgentNode({ id, data }: NodeProps) {
+export function AgentNode({ id, data, selected }: NodeProps) {
   const selectNode = useCanvasStore((s) => s.selectNode);
   const selectTool = useCanvasStore((s) => s.selectTool);
   const tools = (data.tools as ToolEntry[] | undefined) ?? [];
 
   return (
-    <div className="min-w-45 max-w-60 rounded-xl border-2 border-primary bg-card px-4 py-3 shadow-sm">
+    <div
+      className={`min-w-52 max-w-64 rounded-2xl border bg-card p-4 shadow-[0_12px_30px_-18px_rgba(27,43,33,0.3)] transition ${
+        selected
+          ? "border-primary ring-2 ring-primary/15"
+          : "border-border"
+      }`}
+    >
       <Handle type="target" position={Position.Top} id="top" />
       <Handle type="target" position={Position.Left} id="left" />
       <Handle type="target" position={Position.Right} id="right" />
       <Handle type="source" position={Position.Bottom} id="bottom" />
-      <p className="flex items-center gap-1.5 text-xs font-medium text-primary">
-        <AppIcon name="bot" className="size-3.5" />
-        Agent
-      </p>
-      <p className="text-muted-foreground mt-1 text-xs">{(data.label as string) ?? "Main agent"}</p>
+      <div className="flex items-center gap-2.5">
+        <span className="flex size-8 items-center justify-center rounded-xl bg-primary/10 text-primary">
+          <AppIcon name="bot" className="size-4" />
+        </span>
+        <div className="min-w-0">
+          <p className="text-[10px] font-semibold tracking-[0.12em] text-primary uppercase">Agent</p>
+          <p className="mt-0.5 truncate text-xs font-medium text-foreground">
+            {(data.label as string) ?? "Main agent"}
+          </p>
+        </div>
+      </div>
       {tools.length > 0 && (
-        <div className="mt-2 flex flex-wrap gap-1">
+        <div className="mt-3 flex flex-wrap gap-1.5 border-t border-border pt-3">
           {tools.map((tool, index) => (
             <button
               key={`${tool.toolId}-${index}`}
               type="button"
-              className="nodrag nopan inline-flex items-center gap-1 rounded-md border border-border bg-background/80 px-1.5 py-0.5 text-[10px] leading-tight text-foreground"
+              className="nodrag nopan inline-flex items-center gap-1 rounded-full border border-border bg-background px-2 py-1 text-[10px] leading-tight text-muted-foreground transition hover:border-primary/40 hover:text-foreground"
               onPointerDown={(event) => event.stopPropagation()}
               onClick={(event) => {
                 event.stopPropagation();

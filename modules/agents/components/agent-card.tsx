@@ -38,26 +38,44 @@ export function AgentCard({ agent }: AgentCardProps) {
   const deleteAgent = useDeleteAgent();
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <span className="text-2xl">{agent.icon}</span>
-          {agent.name}
-        </CardTitle>
-        <CardDescription>{agent.description || "No description yet"}</CardDescription>
+    <Card className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+      <CardHeader className="pb-3">
+        <div className="flex items-start gap-3.5">
+          <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-2xl text-primary">
+            {agent.icon}
+          </span>
+          <div className="min-w-0 pt-0.5">
+            <CardTitle className="truncate text-base font-semibold tracking-tight text-card-foreground">
+              {agent.name}
+            </CardTitle>
+            <CardDescription className="mt-1 line-clamp-2 min-h-10 text-sm leading-5 text-muted-foreground">
+              {agent.description || "No description yet"}
+            </CardDescription>
+          </div>
+        </div>
       </CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground text-xs">
+      <CardContent className="mt-auto pb-4">
+        <p className="text-xs text-muted-foreground">
           Updated {formatDistanceToNow(agent.updatedAt, { addSuffix: true })}
         </p>
       </CardContent>
-      <CardFooter className="gap-2">
-        <Button render={<Link href={`/agents/${agent.id}/builder`} />} nativeButton={false}>
-          Open
+      <CardFooter className="gap-2 border-t border-border pt-4">
+        <Button
+          className="h-9 flex-1 rounded-full"
+          render={<Link href={`/agents/${agent.id}/builder`} />}
+          nativeButton={false}
+        >
+          Open builder
         </Button>
 
         <AlertDialog>
-          <AlertDialogTrigger render={<Button variant="outline" />}>Delete</AlertDialogTrigger>
+          <AlertDialogTrigger
+            render={
+              <Button variant="outline" className="h-9 rounded-full px-4" />
+            }
+          >
+            Delete
+          </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Delete &quot;{agent.name}&quot;?</AlertDialogTitle>

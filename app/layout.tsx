@@ -18,8 +18,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Agent Builder",
-  description: "Design, build, and run AI agents.",
+  title: {
+    default: "Agent Builder — Build AI agents that do more",
+    template: "%s | Agent Builder",
+  },
+  description:
+    "Design AI agents visually, connect useful tools, and test every idea in one focused workspace.",
   icons: {
     icon: "/icon.svg",
   },

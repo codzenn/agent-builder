@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
 
-// A quick cookie check so signed-out users go straight to /login.
+// A quick cookie check keeps signed-out users out of the workspace.
 // The real session check still happens on the server in requireAuth().
 function isProtected(path: string) {
-  return path === "/" || path.startsWith("/agents");
+  return path.startsWith("/agents");
 }
 
 export function proxy(request: NextRequest) {

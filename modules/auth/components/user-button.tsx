@@ -16,17 +16,22 @@ import { Logout01Icon } from "@hugeicons/core-free-icons";
 
 export function UserButton({
   user,
+  compact = false,
 }: {
   user: { name?: string | null; email: string; image?: string | null };
+  compact?: boolean;
 }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center gap-2 rounded-full outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50">
+      <DropdownMenuTrigger
+        aria-label={`Account: ${user.name ?? user.email}`}
+        className="flex items-center gap-2 rounded-full outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+      >
         <Avatar>
           {user.image && <AvatarImage src={user.image} alt={user.name ?? "User"} />}
           <AvatarFallback>{user.name?.[0] ?? user.email[0]}</AvatarFallback>
         </Avatar>
-        {user.name && <span className="text-sm">{user.name}</span>}
+        {!compact && user.name && <span className="text-sm">{user.name}</span>}
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-56">

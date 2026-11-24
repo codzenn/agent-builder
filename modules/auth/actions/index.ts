@@ -8,6 +8,7 @@ export async function signIn() {
   const res = await auth.api.signInSocial({
     body: {
       provider: "github",
+      callbackURL: "/agents",
       disableRedirect: true,
     },
     headers: await headers(),
@@ -39,5 +40,5 @@ export async function requireUnauth() {
     headers: await headers(),
   });
 
-  if (session) redirect("/");
+  if (session) redirect("/agents");
 }
