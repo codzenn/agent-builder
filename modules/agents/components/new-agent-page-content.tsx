@@ -22,7 +22,7 @@ export function NewAgentPageContent() {
         <p className="mb-2 text-xs font-semibold tracking-[0.16em] text-primary uppercase">
           New workflow
         </p>
-        <h1 className="font-heading text-3xl font-semibold tracking-[-0.05em] text-foreground sm:text-4xl">
+        <h1 className="font-heading text-3xl font-semibold tracking-tighter text-foreground sm:text-4xl">
           Start with a strong first draft.
         </h1>
         <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">

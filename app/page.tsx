@@ -81,7 +81,7 @@ export default function Home() {
             </span>
             A clearer way to build AI agents
           </div>
-          <h1 className="max-w-[680px] text-[clamp(3.35rem,7.2vw,6.35rem)] leading-[0.99] font-semibold tracking-[-0.075em] text-foreground">
+          <h1 className="max-w-170 text-[clamp(3.35rem,7.2vw,6.35rem)] leading-[0.99] font-semibold tracking-[-0.075em] text-foreground">
             Turn your ideas into <span className="text-primary">capable agents.</span>
           </h1>
           <p className="mt-7 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
@@ -113,7 +113,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[620px] lg:ml-auto">
+        <div className="relative mx-auto w-full max-w-155 lg:ml-auto">
           <div className="absolute -right-20 -top-20 size-72 rounded-full bg-[#f7d8c8]/70 blur-3xl dark:opacity-30" />
           <div className="absolute -bottom-16 -left-16 size-64 rounded-full bg-[#dcece0]/80 blur-3xl dark:opacity-30" />
           <div className="relative rounded-[26px] border border-border bg-card p-2.5 shadow-xl sm:rounded-[30px] sm:p-3">
@@ -132,7 +132,7 @@ export default function Home() {
                   <span className="size-1.5 rounded-full bg-emerald-500" /> Ready to test
                 </span>
               </div>
-              <div className="grid min-h-[310px] sm:min-h-[374px] md:grid-cols-[1.05fr_0.95fr]">
+              <div className="grid min-h-77.5 sm:min-h-93.5 md:grid-cols-[1.05fr_0.95fr]">
                 <div className="border-b border-border p-4 sm:p-5 md:border-r md:border-b-0">
                   <div className="mb-4 flex items-center justify-between">
                     <span className="text-[10px] font-semibold tracking-[0.12em] text-muted-foreground uppercase">
@@ -150,7 +150,7 @@ export default function Home() {
                         <p className="mt-1 text-[10px] text-muted-foreground">Agent instructions</p>
                       </div>
                     </div>
-                    <div className="ml-[27px] h-5 border-l border-dashed border-border" />
+                    <div className="ml-6.75 h-5 border-l border-dashed border-border" />
                     <div className="flex items-center gap-3 rounded-xl border border-primary/30 bg-primary/5 p-3 shadow-sm shadow-primary/5">
                       <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                         <CloudSun className="size-4" weight="duotone" />
@@ -160,7 +160,7 @@ export default function Home() {
                         <p className="mt-1 text-[10px] text-muted-foreground">Weather · Web search</p>
                       </div>
                     </div>
-                    <div className="ml-[27px] h-5 border-l border-dashed border-border" />
+                    <div className="ml-6.75 h-5 border-l border-dashed border-border" />
                     <div className="flex items-center gap-3 rounded-xl border border-border bg-card p-3 shadow-sm">
                       <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
                         <Check className="size-4" weight="bold" />
@@ -234,7 +234,7 @@ export default function Home() {
             <p className="text-xs font-semibold tracking-[0.18em] text-primary uppercase">
               Your agent, your way
             </p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-foreground sm:text-4xl">
+            <h2 className="mt-4 text-3xl font-semibold tracking-tighter text-foreground sm:text-4xl">
               Everything you need to bring it to life.
             </h2>
             <p className="mt-4 text-sm leading-6 text-muted-foreground sm:text-base">
@@ -270,7 +270,7 @@ export default function Home() {
             <p className="text-xs font-semibold tracking-[0.18em] text-primary uppercase">
               A simple starting point
             </p>
-            <h2 className="mt-4 max-w-md text-3xl leading-tight font-semibold tracking-[-0.05em] text-foreground sm:text-4xl">
+            <h2 className="mt-4 max-w-md text-3xl leading-tight font-semibold tracking-tighter text-foreground sm:text-4xl">
               From first thought to first run.
             </h2>
             <p className="mt-4 max-w-md text-sm leading-6 text-muted-foreground sm:text-base">
@@ -300,7 +300,7 @@ export default function Home() {
             <p className="text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
               Your next idea is a good place to start
             </p>
-            <h2 className="mx-auto mt-4 max-w-2xl text-3xl leading-tight font-semibold tracking-[-0.05em] text-card-foreground sm:text-5xl">
+            <h2 className="mx-auto mt-4 max-w-2xl text-3xl leading-tight font-semibold tracking-tighter text-card-foreground sm:text-5xl">
               Make something useful with AI.
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-muted-foreground sm:text-base">

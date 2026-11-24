@@ -26,7 +26,7 @@ export function AgentsPageContent() {
           <p className="mb-2 text-xs font-semibold tracking-[0.16em] text-primary uppercase">
             Your workspace
           </p>
-          <h1 className="font-heading text-3xl font-semibold tracking-[-0.05em] text-foreground sm:text-4xl">
+          <h1 className="font-heading text-3xl font-semibold tracking-tighter text-foreground sm:text-4xl">
             My agents
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -43,7 +43,7 @@ export function AgentsPageContent() {
       </div>
 
       {list.length === 0 ? (
-        <section className="relative flex min-h-[420px] flex-1 flex-col items-center justify-center overflow-hidden rounded-[26px] border border-border bg-card px-6 py-12 text-center shadow-sm">
+        <section className="relative flex min-h-105 flex-1 flex-col items-center justify-center overflow-hidden rounded-[26px] border border-border bg-card px-6 py-12 text-center shadow-sm">
           <div className="absolute -top-20 left-1/2 size-60 -translate-x-1/2 rounded-full bg-[#f9e4da]/60 blur-3xl" />
           <div className="relative flex size-16 items-center justify-center rounded-2xl bg-primary/10 text-3xl text-primary shadow-sm">
             ✳

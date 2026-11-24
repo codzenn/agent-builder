@@ -32,7 +32,7 @@ async function SignInContent() {
   return (
     <main className="relative flex min-h-screen flex-1 items-center justify-center bg-background px-5 py-8 sm:px-8 sm:py-12">
       <ModeToggle className="absolute right-5 top-5 sm:right-8 sm:top-8" />
-      <div className="grid w-full max-w-5xl overflow-hidden rounded-[28px] border border-border bg-card shadow-xl lg:min-h-[590px] lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="grid w-full max-w-5xl overflow-hidden rounded-[28px] border border-border bg-card shadow-xl lg:min-h-147.5 lg:grid-cols-[1.05fr_0.95fr]">
         <section className="relative hidden flex-col justify-between overflow-hidden border-r border-border bg-muted p-10 text-card-foreground lg:flex xl:p-14">
           <div className="absolute -left-24 -top-20 size-80 rounded-full bg-primary/10 blur-3xl" />
           <div className="absolute -right-20 bottom-0 size-72 rounded-full bg-primary/10 blur-3xl" />
@@ -42,7 +42,7 @@ async function SignInContent() {
               <span className="flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary ring-1 ring-primary/15">
                 <Sparkle className="size-5" weight="fill" />
               </span>
-              <h1 className="mt-6 text-4xl leading-tight font-semibold tracking-[-0.05em] xl:text-5xl">
+              <h1 className="mt-6 text-4xl leading-tight font-semibold tracking-tighter xl:text-5xl">
                 Give your ideas a way to work.
               </h1>
               <p className="mt-5 max-w-sm text-sm leading-7 text-muted-foreground">
@@ -68,7 +68,7 @@ async function SignInContent() {
             <p className="text-xs font-semibold tracking-[0.16em] text-primary uppercase">
               Your workspace awaits
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.05em] text-foreground">
+            <h2 className="mt-3 text-3xl font-semibold tracking-tighter text-foreground">
               Welcome back.
             </h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
