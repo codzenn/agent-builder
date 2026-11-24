@@ -5,9 +5,9 @@ import { AppIcon } from "@/components/app-icon";
 
 export function EndNode({ data }: NodeProps) {
   return (
-    <div className="min-w-35 rounded-xl border-2 border-rose-500/60 bg-card px-4 py-3 shadow-sm">
+    <div className="min-w-35 rounded-xl border-2 border-orange-500/60 bg-card px-4 py-3 shadow-sm">
       <Handle type="target" position={Position.Top} id="top" />
-      <p className="flex items-center gap-1.5 text-xs font-medium text-rose-600 dark:text-rose-400">
+      <p className="flex items-center gap-1.5 text-xs font-medium text-orange-600 dark:text-orange-400">
         <AppIcon name="flag" className="size-3.5" />
         End
       </p>
