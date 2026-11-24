@@ -14,7 +14,7 @@ export function AgentNode({ id, data }: NodeProps) {
   const tools = (data.tools as ToolEntry[] | undefined) ?? [];
 
   return (
-    <div className="min-w-[180px] max-w-[240px] rounded-xl border-2 border-primary bg-card px-4 py-3 shadow-sm">
+    <div className="min-w-45 max-w-60 rounded-xl border-2 border-primary bg-card px-4 py-3 shadow-sm">
       <Handle type="target" position={Position.Top} id="top" />
       <Handle type="target" position={Position.Left} id="left" />
       <Handle type="target" position={Position.Right} id="right" />

@@ -1,8 +1,9 @@
 "use server";
 
 import type { Edge, Node } from "@xyflow/react";
-import { prisma } from "@/lib/db";
-import type { Prisma } from "@/lib/generated/prisma/client";
+import { and, desc, eq } from "drizzle-orm";
+import { db } from "@/lib/db";
+import { agent } from "@/db/schema";
 import { requireAuth } from "@/modules/auth/actions";
 import { migrateV1ToV2 } from "@/modules/workflows/lib/migrate-v1";
 import {
@@ -22,34 +23,37 @@ export type SaveAgentInput = {
 export async function listAgents() {
   const user = await requireAuth();
 
-  return prisma.agent.findMany({
-    where: {
-      userId: user.user.id,
-    },
-    orderBy: {
-      updatedAt: "desc",
-    },
-  });
+  return db
+    .select()
+    .from(agent)
+    .where(eq(agent.userId, user.user.id))
+    .orderBy(desc(agent.updatedAt));
 }
 
 export async function fetchAgent(agentId: string) {
   const user = await requireAuth();
 
-  return prisma.agent.findFirst({
-    where: { id: agentId, userId: user.user.id },
-  });
+  const [result] = await db
+    .select()
+    .from(agent)
+    .where(and(eq(agent.id, agentId), eq(agent.userId, user.user.id)));
+
+  return result;
 }
 
 export async function createBlankAgent() {
   const user = await requireAuth();
-
-  return prisma.agent.create({
-    data: {
+  const [result] = await db
+    .insert(agent)
+    .values({
+      id: crypto.randomUUID(),
       userId: user.user.id,
       name: "Untitled Agent",
-      draftDefinition: defaultBuilderDefinition() as Prisma.InputJsonValue,
-    },
-  });
+      draftDefinition: defaultBuilderDefinition(),
+    })
+    .returning();
+
+  return result;
 }
 
 export async function createFromTemplate(templateId: string) {
@@ -60,8 +64,10 @@ export async function createFromTemplate(templateId: string) {
     throw new Error("Template not found");
   }
 
-  return prisma.agent.create({
-    data: {
+  const [result] = await db
+    .insert(agent)
+    .values({
+      id: crypto.randomUUID(),
       userId: user.user.id,
       templateId: template.id,
       name: template.name,
@@ -70,40 +76,50 @@ export async function createFromTemplate(templateId: string) {
       welcomeMessage: template.welcomeMessage,
       starterPrompts: template.starterPrompts,
       // Templates are written in the simple V1 format; we store them as a V2 graph.
-      draftDefinition: migrateV1ToV2(template.definition) as Prisma.InputJsonValue,
-    },
-  });
+      draftDefinition: migrateV1ToV2(template.definition),
+    })
+    .returning();
+
+  return result;
 }
 
 export async function deleteAgent(agentId: string) {
   const user = await requireAuth();
 
-  await prisma.agent.deleteMany({
-    where: { id: agentId, userId: user.user.id },
-  });
+  await db
+    .delete(agent)
+    .where(and(eq(agent.id, agentId), eq(agent.userId, user.user.id)));
 }
 
 export async function saveAgent(agentId: string, data: SaveAgentInput) {
   const user = await requireAuth();
 
-  const agent = await prisma.agent.findFirst({
-    where: { id: agentId, userId: user.user.id },
-  });
+  const [existingAgent] = await db
+    .select({ userId: agent.userId })
+    .from(agent)
+    .where(eq(agent.id, agentId));
 
-  if (!agent) {
+  if (!existingAgent) {
+    throw new Error("Agent not found");
+  }
+
+  if (existingAgent.userId !== user.user.id) {
     throw new Error("Agent not found");
   }
 
   // Server actions can be called by anyone, so check the shape before saving.
   const draftDefinition = builderDefinitionSchema.parse(data.draftDefinition);
 
-  return prisma.agent.update({
-    where: { id: agentId },
-    data: {
+  const [result] = await db
+    .update(agent)
+    .set({
       name: data.name,
       description: data.description,
-      draftDefinition: draftDefinition as Prisma.InputJsonValue,
-      canvas: data.canvas as unknown as Prisma.InputJsonValue,
-    },
-  });
+      draftDefinition,
+      canvas: data.canvas,
+    })
+    .where(and(eq(agent.id, agentId), eq(agent.userId, user.user.id)))
+    .returning();
+
+  return result;
 }

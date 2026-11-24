@@ -1,9 +1,12 @@
-import {prisma} from "@/lib/db";
+import { and, eq } from "drizzle-orm";
+import { db } from "@/lib/db";
+import { account } from "@/db/schema";
 
 export async function getGithubToken(userId: string) {
-  const account = await prisma.account.findFirst({
-    where: { userId, providerId: "github" },
-  });
+  const [result] = await db
+    .select({ accessToken: account.accessToken })
+    .from(account)
+    .where(and(eq(account.userId, userId), eq(account.providerId, "github")));
 
-  return account?.accessToken ?? null;
+  return result?.accessToken ?? null;
 }

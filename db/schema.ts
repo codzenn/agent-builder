@@ -1,4 +1,11 @@
-import { boolean, index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  index,
+  jsonb,
+  pgTable,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -12,6 +19,33 @@ export const user = pgTable("user", {
     .$onUpdate(() => new Date())
     .notNull(),
 });
+
+export const agent = pgTable(
+  "agent",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    templateId: text("template_id"),
+    name: text("name").notNull(),
+    description: text("description").default("").notNull(),
+    icon: text("icon").default("🤖").notNull(),
+    welcomeMessage: text("welcome_message").default("").notNull(),
+    starterPrompts: jsonb("starter_prompts")
+      .$type<string[]>()
+      .default([])
+      .notNull(),
+    draftDefinition: jsonb("draft_definition").notNull(),
+    canvas: jsonb("canvas").default({}).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => new Date())
+      .notNull(),
+  },
+  (table) => [index("agent_userId_idx").on(table.userId)],
+);
 
 export const session = pgTable(
   "session",

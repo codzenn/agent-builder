@@ -2,13 +2,11 @@
 
 import {
   addEdge,
-  applyEdgeChanges,
-  applyNodeChanges,
   type Connection,
   type Edge,
-  type EdgeChange,
+  EdgeChangeset,
   type Node,
-  type NodeChange,
+  NodeChangeset,
 } from "@xyflow/react";
 import { create } from "zustand";
 import type { BuilderDefinition } from "@/modules/workflows/lib/schema";
@@ -31,8 +29,8 @@ type CanvasStore = {
   limits: BuilderDefinition["limits"];
   isDirty: boolean;
   init: (draftDefinition: unknown, canvas: unknown) => void;
-  onNodesChange: (changes: NodeChange[]) => void;
-  onEdgesChange: (changes: EdgeChange[]) => void;
+  onNodesChange: (changes: NodeChangeset<Node>) => void;
+  onEdgesChange: (changes: EdgeChangeset<Edge>) => void;
   onConnect: (connection: Connection) => void;
   selectNode: (nodeId: string | null) => void;
   selectTool: (index: number | null) => void;
@@ -99,14 +97,14 @@ export const useCanvasStore = create<CanvasStore>((set, get) => ({
   },
 
   onNodesChange(changes) {
-    const filtered = changes.filter((change) => {
+    const filtered = changes.toArray().filter((change) => {
       if (change.type !== "remove") return true;
       const node = get().nodes.find((n) => n.id === change.id);
       return node?.type !== "start" && node?.type !== "agent" && node?.type !== "end";
     });
 
     set({
-      nodes: applyNodeChanges(filtered, get().nodes),
+      nodes: new NodeChangeset<Node>(filtered).applyTo(get().nodes),
       // React Flow also sends "select" and "dimensions" changes, which are not real edits.
       isDirty: get().isDirty || filtered.some((c) => c.type === "position" || c.type === "remove"),
     });
@@ -114,8 +112,8 @@ export const useCanvasStore = create<CanvasStore>((set, get) => ({
 
   onEdgesChange(changes) {
     set({
-      edges: applyEdgeChanges(changes, get().edges),
-      isDirty: get().isDirty || changes.some((c) => c.type === "remove"),
+      edges: changes.applyTo(get().edges),
+      isDirty: get().isDirty || changes.toArray().some((c) => c.type === "remove"),
     });
   },
 
