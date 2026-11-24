@@ -1,10 +1,32 @@
+import { Suspense } from "react";
 import { Logo } from "@/components/logo";
 import { requireAuth } from "@/modules/auth/actions";
 import { UserButton } from "@/modules/auth/components/user-button";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import Link from "next/link";
 
-export default async function DashboardLayout({
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <Suspense
+      fallback={
+        <div
+          className="flex min-h-full flex-1 items-center justify-center bg-background p-6 text-sm text-muted-foreground"
+          aria-live="polite"
+        >
+          Loading your workspace...
+        </div>
+      }
+    >
+      <AuthenticatedDashboardLayout>{children}</AuthenticatedDashboardLayout>
+    </Suspense>
+  );
+}
+
+async function AuthenticatedDashboardLayout({
   children,
 }: {
   children: React.ReactNode;

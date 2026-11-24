@@ -39,7 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         publicSans.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <Provider>
           {children} <Toaster />
         </Provider>

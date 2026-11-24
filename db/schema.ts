@@ -47,6 +47,42 @@ export const agent = pgTable(
   (table) => [index("agent_userId_idx").on(table.userId)],
 );
 
+export const conversation = pgTable(
+  "conversation",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull(),
+    agentId: text("agent_id")
+      .notNull()
+      .references(() => agent.id, { onDelete: "cascade" }),
+    title: text("title").default("Test chat").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => new Date())
+      .notNull(),
+  },
+  (table) => [
+    index("conversation_userId_idx").on(table.userId),
+    index("conversation_agentId_idx").on(table.agentId),
+  ],
+);
+
+export const message = pgTable(
+  "message",
+  {
+    id: text("id").primaryKey(),
+    conversationId: text("conversation_id")
+      .notNull()
+      .references(() => conversation.id, { onDelete: "cascade" }),
+    role: text("role").notNull(),
+    content: text("content").notNull(),
+    toolEvents: jsonb("tool_events").$type<unknown[]>().default([]).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [index("message_conversationId_idx").on(table.conversationId)],
+);
+
 export const session = pgTable(
   "session",
   {
